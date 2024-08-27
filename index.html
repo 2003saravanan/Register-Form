@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <style>
+        .error-message {
+            color: red; /* Tailwind red-400 */
+        }
+    </style> 
+</head>
+<body class="bg-pink-600 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-4">Register Form</h1>
+        <form id="registrationForm">
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <p id="nameError" class="error-message text-sm mt-1"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <p id="emailError" class="error-message text-sm mt-1"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <p id="passwordError" class="error-message text-sm mt-1"></p>
+            </div>
+
+            <div class="mb-4">
+                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                <input type="address" id="address" name="address" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <p id="addressError" class="error-message text-sm mt-1"></p>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" disabled>
+                submit
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const addressInput = document.getElementById('address');
+            const submitBtn = document.getElementById('submitBtn');
+
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const addressError = document.getElementById('addressError');
+
+            function validateName() {
+                if (nameInput.value.trim() === '') {
+                    nameError.textContent = '*Name is required.';
+                    return false;
+                } else {
+                    nameError.textContent = '';
+                    return true;
+                }
+            }
+
+            function validateEmail() {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(emailInput.value.trim())) {
+                    emailError.textContent = '*Invalid email address.';
+                    return false;
+                } else {
+                    emailError.textContent = '';
+                    return true;
+                }
+            }
+
+            function validatePassword() {
+                if (passwordInput.value.length <6 ) {
+                    passwordError.textContent ='*Password must be at least 6 characters long.';
+                    return false;
+                } else {
+                    passwordError.textContent = '';
+                    return true;
+                }
+            }
+
+            function validateAddress() {
+                if (addressInput.value.trim() === '') {
+                    addressError.textContent = '*Address is required.';
+                    return false;
+                } else {
+                    addressError.textContent = '';
+                    return true;
+                }
+            }
+
+            
+
+            function validateForm() {
+                const isNameValid = validateName();
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+                const isAddressValid = validateAddress();
+                submitBtn.disabled = !(isNameValid && isEmailValid && isPasswordValid && isAddressValid);
+            }
+
+            nameInput.addEventListener('input', validateForm);
+            emailInput.addEventListener('input', validateForm);
+            passwordInput.addEventListener('input', validateForm);
+            addressInput.addEventListener('input', validateForm);
+
+            // Initial validation on page load
+            validateForm();
+        });
+    </script>
+</body>
+</html>
